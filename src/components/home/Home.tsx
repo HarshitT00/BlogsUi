@@ -1,7 +1,7 @@
 import { BaseLayout } from '../../template/BaseLayout';
 import { HomeHeader } from './HomeHeader';
 import { HomeBody } from './HomeBody';
-import { useBlogsInfiniteQuery, useMyBlogsInfiniteQuery } from '../../query/BlogsQuery';
+import { useBlogsInfiniteQuery } from '../../query/BlogsQuery';
 import { SortBy, SortOrder } from '../../api/BlogsApiModels';
 import { useState } from 'react';
 
