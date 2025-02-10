@@ -1,0 +1,33 @@
+import { useInfiniteQuery, useMutation, useQueryClient} from '@tanstack/react-query';
+import { deleteBlog, fetchBlogs, fetchMyBlogs } from '../api/BlogsApi';
+import { BlogRequest } from '../api/BlogsApiModels';
+
+export const useBlogsInfiniteQuery = (req : BlogRequest) => {
+    return useInfiniteQuery({
+        queryKey: ['blogs', {...req}],
+        queryFn: ({ pageParam }) => fetchBlogs({ ...req, pageNumber: pageParam }),
+        staleTime: 30 * 60 * 1000,
+        getNextPageParam: (lastPage) => lastPage.hasMoreItems ? lastPage.pageNumber + 1 : undefined,
+        initialPageParam: 0,
+    });
+};
+
+export const useMyBlogsInfiniteQuery = (userName: string, req : BlogRequest) => {
+    return useInfiniteQuery({
+        queryKey: ['blogs', userName, {...req}],
+        queryFn: ({ pageParam }) => fetchMyBlogs(userName, { ...req, pageNumber: pageParam }),
+        staleTime: 30 * 60 * 1000,
+        getNextPageParam: (lastPage) => lastPage.hasMoreItems ? lastPage.pageNumber + 1 : undefined,
+        initialPageParam: 0,
+    });
+};
+
+export const useDeleteBlogMutation = () => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (blogId : number) => deleteBlog(blogId),
+        onSettled: () => {
+            queryClient.invalidateQueries({ queryKey: ['blogs'] })
+        }
+    });
+}
