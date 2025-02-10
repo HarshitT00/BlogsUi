@@ -7,8 +7,9 @@ import { MyBlogsBody } from './MyBlogsBody';
 
 export const MyBlogs = () => {
     const [sortOrder, setSortOrder] = useState<SortOrder>(SortOrder.ASC);
+    const userName = localStorage.getItem('userName');
     const { data: allBlogsData, isLoading, fetchNextPage, isError, hasNextPage } = useMyBlogsInfiniteQuery(
-        'testuser',{ pageSize: 3, sortDirection: sortOrder, sortBy: SortBy.CREATED_AT }
+        userName ,{ pageSize: 3, sortDirection: sortOrder, sortBy: SortBy.CREATED_AT }
     );
     const { mutate } = useDeleteBlogMutation();
     return (

@@ -14,6 +14,7 @@ export const HomeHeader = ({sortOrder, setSortOrder} : HomeHeaderProps) => {
     const navigate = useNavigate();
     const location = useLocation();
     const [searchText, setSearchText] = useState("");
+    const useName = localStorage.getItem('userName');
 
     const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSearchText(event.target.value);
@@ -37,12 +38,15 @@ export const HomeHeader = ({sortOrder, setSortOrder} : HomeHeaderProps) => {
                 >
                     All Blogs
                 </StyledButton>
-                <StyledButton 
-                    color={location.pathname === '/blogs/my-blogs' ? 'primary' : 'inherit'}
-                    onClick={handleMyBlogsClick}
-                >
-                    My Blogs
-                </StyledButton>
+                {
+                useName &&
+                    <StyledButton 
+                        color={location.pathname === '/blogs/my-blogs' ? 'primary' : 'inherit'}
+                        onClick={handleMyBlogsClick}
+                    >
+                        My Blogs
+                    </StyledButton>
+                }
             </div>
             <SearchBar 
                 value={searchText}

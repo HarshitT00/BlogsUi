@@ -12,13 +12,14 @@ export const useBlogsInfiniteQuery = (req : BlogRequest) => {
     });
 };
 
-export const useMyBlogsInfiniteQuery = (userName: string, req : BlogRequest) => {
+export const useMyBlogsInfiniteQuery = (userName: string | null, req : BlogRequest) => {
     return useInfiniteQuery({
         queryKey: ['blogs', userName, {...req}],
         queryFn: ({ pageParam }) => fetchMyBlogs(userName, { ...req, pageNumber: pageParam }),
         staleTime: 30 * 60 * 1000,
         getNextPageParam: (lastPage) => lastPage.hasMoreItems ? lastPage.pageNumber + 1 : undefined,
         initialPageParam: 0,
+        enabled: !!userName
     });
 };
 
