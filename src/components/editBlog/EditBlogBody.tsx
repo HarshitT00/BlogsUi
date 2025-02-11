@@ -7,7 +7,7 @@ import {
   Typography,
   Box,
   Snackbar,
-  Alert
+  Alert,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { BlogFormData, Blogs } from '../../api/BlogsApiModels';
@@ -19,10 +19,18 @@ interface EditBlogBodyProps {
   isPending?: boolean;
 }
 
-export const EditBlogBody = ({ isEdit = false, data, onSubmit, isPending }: EditBlogBodyProps) => {
+export const EditBlogBody = ({
+  isEdit = false,
+  data,
+  onSubmit,
+  isPending,
+}: EditBlogBodyProps) => {
   const navigate = useNavigate();
   const [error, setError] = useState<string>('');
-  const [formData, setFormData] = useState<BlogFormData>({ title: data?.title || '', content: data?.content || '' });
+  const [formData, setFormData] = useState<BlogFormData>({
+    title: data?.title || '',
+    content: data?.content || '',
+  });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -33,10 +41,12 @@ export const EditBlogBody = ({ isEdit = false, data, onSubmit, isPending }: Edit
     onSubmit(formData);
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
-}
+  };
 
   return (
     <Container maxWidth="md" sx={{ py: 4 }}>
@@ -56,7 +66,9 @@ export const EditBlogBody = ({ isEdit = false, data, onSubmit, isPending }: Edit
             onChange={handleChange}
             sx={{ mb: 3 }}
             error={!!error && !formData.title.trim()}
-            helperText={error && !formData.title.trim() ? 'Title is required' : ''}
+            helperText={
+              error && !formData.title.trim() ? 'Title is required' : ''
+            }
           />
 
           <TextField
@@ -71,7 +83,9 @@ export const EditBlogBody = ({ isEdit = false, data, onSubmit, isPending }: Edit
             onChange={handleChange}
             sx={{ mb: 3 }}
             error={!!error && !formData.content.trim()}
-            helperText={error && !formData.content.trim() ? 'Content is required' : ''}
+            helperText={
+              error && !formData.content.trim() ? 'Content is required' : ''
+            }
           />
 
           <Box sx={{ display: 'flex', gap: 2, justifyContent: 'flex-end' }}>
@@ -82,11 +96,7 @@ export const EditBlogBody = ({ isEdit = false, data, onSubmit, isPending }: Edit
             >
               Cancel
             </Button>
-            <Button
-              type="submit"
-              variant="contained"
-              disabled={isPending}
-            >
+            <Button type="submit" variant="contained" disabled={isPending}>
               {isEdit ? 'Update' : 'Publish'} Blog
             </Button>
           </Box>
@@ -98,7 +108,11 @@ export const EditBlogBody = ({ isEdit = false, data, onSubmit, isPending }: Edit
           onClose={() => setError('')}
           anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
         >
-          <Alert onClose={() => setError('')} severity="error" sx={{ width: '100%' }}>
+          <Alert
+            onClose={() => setError('')}
+            severity="error"
+            sx={{ width: '100%' }}
+          >
             {error}
           </Alert>
         </Snackbar>
