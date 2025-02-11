@@ -35,7 +35,7 @@ export const BaseLayout: React.FC<BaseLayoutProps> = ({ header, body }) => {
     <Box sx={{ flexGrow: 1 }}>
       <StyledAppBar position="static">
         <StyledToolbar>
-          <Typography variant="h3" component="div" sx={{ flexGrow: 1 }} paddingLeft={10} onClick={() => navigate("/blogs")}>
+          <Typography variant="h3" component="div" sx={{ flexGrow: 1 }} paddingLeft={10} onClick={() => navigate("/")}>
             Blogs
           </Typography>
 

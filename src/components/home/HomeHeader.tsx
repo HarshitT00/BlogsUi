@@ -22,18 +22,18 @@ export const HomeHeader = ({sortOrder, setSortOrder} : HomeHeaderProps) => {
     };
 
     const handleAllBlogsClick = () => {
-        navigate('/blogs');
+        navigate('/');
     };
 
     const handleMyBlogsClick = () => {
-        navigate('/blogs/my-blogs');
+        navigate('/my-blogs');
     };
 
     return (
         <StyledHomeHeaderContainer>
             <div>
                 <StyledButton 
-                    color={location.pathname === '/blogs' ? 'primary' : 'inherit'}
+                    color={location.pathname === '/' ? 'primary' : 'inherit'}
                     onClick={handleAllBlogsClick}
                 >
                     All Blogs
@@ -41,7 +41,7 @@ export const HomeHeader = ({sortOrder, setSortOrder} : HomeHeaderProps) => {
                 {
                 useName &&
                     <StyledButton 
-                        color={location.pathname === '/blogs/my-blogs' ? 'primary' : 'inherit'}
+                        color={location.pathname === '/my-blogs' ? 'primary' : 'inherit'}
                         onClick={handleMyBlogsClick}
                     >
                         My Blogs

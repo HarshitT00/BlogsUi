@@ -12,6 +12,7 @@ import {
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { styled } from '@mui/material/styles';
 import { LoginRequest } from '../../api/AuthApiModels';
+import { useNavigate } from 'react-router-dom';
 
 interface LoginBodyProps {
   isLoading?: boolean;
@@ -24,11 +25,12 @@ interface LoginBodyProps {
 export const LoginBody = ({handleLogin, isLoading, isError, errorMessage}: LoginBodyProps) => {
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault(); // Prevents default form submission
     handleLogin({userName, password});  
-    console.log(localStorage.getItem('userName'));
+    navigate('/');
   };
 
   return (
