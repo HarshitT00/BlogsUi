@@ -1,6 +1,6 @@
 import { useInfiniteQuery, useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
-import { deleteBlog, fetchBlogs, fetchMyBlogs, getBlog } from '../api/BlogsApi';
-import { BlogRequest } from '../api/BlogsApiModels';
+import { addBlog, deleteBlog, fetchBlogs, fetchMyBlogs, getBlog, updateBlog } from '../api/BlogsApi';
+import { BlogFormData, BlogRequest} from '../api/BlogsApiModels';
 
 export const useBlogsInfiniteQuery = (req : BlogRequest) => {
     return useInfiniteQuery({
@@ -40,3 +40,31 @@ export const useGetBlogQuery = (blogId : number) => {
         staleTime: 30 * 60 * 1000,
     });
 };
+
+export const useUpdateBlogMutation = (userName: string | null) => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: ({ blogId, req }: { blogId: number, req: BlogFormData }) =>{
+            if(!userName) throw new Error('User name is required');
+
+            return updateBlog(blogId, userName, req);
+        },
+        onSettled: () => {
+            queryClient.invalidateQueries({ queryKey: ['blogs'] })
+        }
+    });
+}
+
+export const useAddBlogMutation = (userName: string | null) => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: ({ req }: {req: BlogFormData }) =>{
+            if(!userName) throw new Error('User name is required');
+
+            return addBlog( userName, req);
+        },
+        onSettled: () => {
+            queryClient.invalidateQueries({ queryKey: ['blogs'] })
+        }
+    });
+}

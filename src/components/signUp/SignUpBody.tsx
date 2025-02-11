@@ -29,7 +29,7 @@ export const SignUpBody = ({handleSignUp, isLoading, isError, errorMessage}: Sig
   const [email, setEmail] = useState('');
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
-    e.preventDefault(); // Prevents default form submission
+    e.preventDefault();
     handleSignUp(
       { userName, password, email }, 
       { onSuccess: () => navigate('/login') }

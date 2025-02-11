@@ -6,7 +6,7 @@ import { SortBy, SortOrder } from '../../api/BlogsApiModels';
 import { useState } from 'react';
 
 export const Home = () => {
-    const [sortOrder, setSortOrder] = useState<SortOrder>(SortOrder.ASC);
+    const [sortOrder, setSortOrder] = useState<SortOrder>(SortOrder.DESC);
     const { data: allBlogsData, isLoading, fetchNextPage, isError, hasNextPage } = useBlogsInfiniteQuery(
         { pageSize: 3, sortDirection: sortOrder, sortBy: SortBy.CREATED_AT }
     );
