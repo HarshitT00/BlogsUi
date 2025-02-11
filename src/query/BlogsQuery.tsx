@@ -1,5 +1,5 @@
-import { useInfiniteQuery, useMutation, useQueryClient} from '@tanstack/react-query';
-import { deleteBlog, fetchBlogs, fetchMyBlogs } from '../api/BlogsApi';
+import { useInfiniteQuery, useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
+import { deleteBlog, fetchBlogs, fetchMyBlogs, getBlog } from '../api/BlogsApi';
 import { BlogRequest } from '../api/BlogsApiModels';
 
 export const useBlogsInfiniteQuery = (req : BlogRequest) => {
@@ -32,3 +32,11 @@ export const useDeleteBlogMutation = () => {
         }
     });
 }
+
+export const useGetBlogQuery = (blogId : number) => {
+    return useQuery({
+        queryKey: ['blogs', blogId],
+        queryFn: ({ pageParam }) => getBlog(blogId),
+        staleTime: 30 * 60 * 1000,
+    });
+};

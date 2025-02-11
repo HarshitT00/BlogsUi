@@ -18,7 +18,7 @@ interface LoginBodyProps {
   isLoading?: boolean;
   isError?: boolean;
   errorMessage?: string;
-  handleLogin: (req : LoginRequest) => void;
+  handleLogin: (req: LoginRequest, callbacks?: { onSuccess: () => void }) => void;
 }
 
 
@@ -28,9 +28,10 @@ export const LoginBody = ({handleLogin, isLoading, isError, errorMessage}: Login
   const navigate = useNavigate();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
-    e.preventDefault(); // Prevents default form submission
-    handleLogin({userName, password});  
-    navigate('/');
+    e.preventDefault();
+    handleLogin({userName, password},
+      { onSuccess: () => navigate('/') }
+    );  
   };
 
   return (

@@ -1,8 +1,16 @@
-import { BlogRequest, BlogsResponse } from "./BlogsApiModels";
+import { BlogRequest, Blogs, BlogsResponse } from "./BlogsApiModels";
 
 const BackendApi : string = 'https://blogsapi-8knn.onrender.com/api/post';
 
-const token = localStorage.getItem('token');
+const getAuthToken = () => localStorage.getItem('token');
+
+const createHeaders = () => {
+  const token = getAuthToken();
+  return {
+    'Content-Type': 'application/json',
+    'Authorization': token ? `Bearer ${token}` : '',
+  };
+};
 
 export const fetchBlogs = async (req : BlogRequest) : Promise<BlogsResponse> => {
   try {
@@ -33,10 +41,7 @@ export const fetchMyBlogs = async (userName: string | null, req?: BlogRequest) :
     const queryParams = new URLSearchParams(req as any).toString();
     const response = await fetch(`${BackendApi}/userName/${userName}?${queryParams}`, {
       method: 'GET',
-      headers: {
-        'Content-Type': 'application/json', 
-        'Authorization': `Bearer ${token}`
-      },
+      headers: createHeaders(),
     });
 
     if (!response.ok) {
@@ -55,13 +60,24 @@ export const deleteBlog = async (blogId: number) : Promise<void> => {
   try {
     await fetch(`${BackendApi}/${blogId}`, {
       method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      },
+      headers: createHeaders(),
     });
   } catch (error) {
     console.error('Failed to delete blog:', error);
+    throw error;
+  }  
+};
+
+
+export const getBlog = async (blogId: number) : Promise<Blogs> => {
+  try {
+    const response = await fetch(`${BackendApi}/${blogId}`, {
+      method: 'GET',
+      headers: createHeaders(),
+    });
+    return response.json();
+  } catch (error) {
+    console.error('Failed to get blog:', error);
     throw error;
   }  
 };
