@@ -29,3 +29,14 @@ export interface BlogRequest{
     sortDirection?: SortOrder;
     sortBy?: SortBy;
 }
+
+export interface EditBlog{
+    title: string;
+    content: string;
+    userName: string;  
+}
+
+export interface BlogFormData {
+    title: string;
+    content: string;
+  }

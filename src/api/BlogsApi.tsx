@@ -1,4 +1,4 @@
-import { BlogRequest, Blogs, BlogsResponse } from "./BlogsApiModels";
+import { BlogFormData, BlogRequest, Blogs, BlogsResponse, EditBlog } from "./BlogsApiModels";
 
 const BackendApi : string = 'https://blogsapi-8knn.onrender.com/api/post';
 
@@ -69,11 +69,41 @@ export const deleteBlog = async (blogId: number) : Promise<void> => {
 };
 
 
-export const getBlog = async (blogId: number) : Promise<Blogs> => {
+export const getBlog = async (blogId : number) : Promise<Blogs> => {
   try {
     const response = await fetch(`${BackendApi}/${blogId}`, {
       method: 'GET',
       headers: createHeaders(),
+    });
+    return response.json();
+  } catch (error) {
+    console.error('Failed to get blog:', error);
+    throw error;
+  }  
+};
+
+export const updateBlog = async (blogId: number, userName: string, req : BlogFormData) : Promise<Blogs> => {
+  try {
+    const updateBlogRequest: EditBlog = {...req, userName: userName};
+    const response = await fetch(`${BackendApi}/${blogId}`, {
+      method: 'PATCH',
+      headers: createHeaders(),
+      body: JSON.stringify(updateBlogRequest),
+    });
+    return response.json();
+  } catch (error) {
+    console.error('Failed to get blog:', error);
+    throw error;
+  }  
+};
+
+export const addBlog = async (userName: string, req : BlogFormData) : Promise<Blogs> => {
+  try {
+    const updateBlogRequest: EditBlog = {...req, userName: userName};
+    const response = await fetch(`${BackendApi}/addPost`, {
+      method: 'POST',
+      headers: createHeaders(),
+      body: JSON.stringify(updateBlogRequest),
     });
     return response.json();
   } catch (error) {
