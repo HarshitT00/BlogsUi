@@ -7,7 +7,7 @@ import {
   Typography,
   Box,
   Alert,
-  CircularProgress
+  CircularProgress,
 } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { styled } from '@mui/material/styles';
@@ -21,17 +21,14 @@ interface LoginBodyProps {
   handleLogin: (req: LoginRequest, callbacks?: { onSuccess: () => void }) => void;
 }
 
-
-export const LoginBody = ({handleLogin, isLoading, isError, errorMessage}: LoginBodyProps) => {
+export const LoginBody = ({ handleLogin, isLoading, isError, errorMessage }: LoginBodyProps) => {
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
-    handleLogin({userName, password},
-      { onSuccess: () => navigate('/') }
-    );  
+    handleLogin({ userName, password }, { onSuccess: () => navigate('/') });
   };
 
   return (
@@ -40,7 +37,7 @@ export const LoginBody = ({handleLogin, isLoading, isError, errorMessage}: Login
         <StyledLockIcon>
           <LockOutlinedIcon sx={{ color: 'white' }} />
         </StyledLockIcon>
-        
+
         <Typography component="h1" variant="h5" gutterBottom>
           Sign In
         </Typography>
@@ -51,11 +48,7 @@ export const LoginBody = ({handleLogin, isLoading, isError, errorMessage}: Login
           </Alert>
         )}
 
-        <Box 
-          component="form" 
-          onSubmit={handleSubmit} 
-          sx={{ mt: 1, width: '100%' }}
-        >
+        <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1, width: '100%' }}>
           <TextField
             margin="normal"
             required
@@ -67,7 +60,7 @@ export const LoginBody = ({handleLogin, isLoading, isError, errorMessage}: Login
             value={userName}
             onChange={(e) => setUserName(e.target.value)}
           />
-          
+
           <TextField
             margin="normal"
             required
@@ -80,12 +73,7 @@ export const LoginBody = ({handleLogin, isLoading, isError, errorMessage}: Login
             onChange={(e) => setPassword(e.target.value)}
           />
 
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2, height: 48 }}
-          >
+          <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2, height: 48 }}>
             {!isLoading ? <>Sign In</> : <CircularProgress size={24} />}
           </Button>
         </Box>
@@ -94,14 +82,13 @@ export const LoginBody = ({handleLogin, isLoading, isError, errorMessage}: Login
   );
 };
 
-
 // Styled components
 const StyledPaper = styled(Paper)(({ theme }) => ({
   marginTop: theme.spacing(8),
   padding: theme.spacing(4),
   display: 'flex',
   flexDirection: 'column',
-  alignItems: 'center'
+  alignItems: 'center',
 }));
 
 const StyledLockIcon = styled(Box)(({ theme }) => ({
@@ -111,5 +98,5 @@ const StyledLockIcon = styled(Box)(({ theme }) => ({
   padding: theme.spacing(1),
   display: 'flex',
   alignItems: 'center',
-  justifyContent: 'center'
+  justifyContent: 'center',
 }));

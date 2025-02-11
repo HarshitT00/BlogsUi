@@ -7,7 +7,7 @@ import {
   Typography,
   Box,
   Snackbar,
-  Alert
+  Alert,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { BlogFormData, Blogs } from '../../api/BlogsApiModels';
@@ -22,7 +22,10 @@ interface EditBlogBodyProps {
 export const EditBlogBody = ({ isEdit = false, data, onSubmit, isPending }: EditBlogBodyProps) => {
   const navigate = useNavigate();
   const [error, setError] = useState<string>('');
-  const [formData, setFormData] = useState<BlogFormData>({ title: data?.title || '', content: data?.content || '' });
+  const [formData, setFormData] = useState<BlogFormData>({
+    title: data?.title || '',
+    content: data?.content || '',
+  });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -36,7 +39,7 @@ export const EditBlogBody = ({ isEdit = false, data, onSubmit, isPending }: Edit
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
-}
+  };
 
   return (
     <Container maxWidth="md" sx={{ py: 4 }}>
@@ -75,18 +78,10 @@ export const EditBlogBody = ({ isEdit = false, data, onSubmit, isPending }: Edit
           />
 
           <Box sx={{ display: 'flex', gap: 2, justifyContent: 'flex-end' }}>
-            <Button
-              variant="outlined"
-              onClick={() => navigate('/')}
-              disabled={isPending}
-            >
+            <Button variant="outlined" onClick={() => navigate('/')} disabled={isPending}>
               Cancel
             </Button>
-            <Button
-              type="submit"
-              variant="contained"
-              disabled={isPending}
-            >
+            <Button type="submit" variant="contained" disabled={isPending}>
               {isEdit ? 'Update' : 'Publish'} Blog
             </Button>
           </Box>

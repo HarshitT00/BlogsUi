@@ -7,7 +7,7 @@ import {
   Typography,
   Box,
   Alert,
-  CircularProgress
+  CircularProgress,
 } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { styled } from '@mui/material/styles';
@@ -21,8 +21,7 @@ interface SignUpBodyProps {
   handleSignUp: (req: SignUpRequest, callbacks?: { onSuccess: () => void }) => void;
 }
 
-
-export const SignUpBody = ({handleSignUp, isLoading, isError, errorMessage}: SignUpBodyProps) => {
+export const SignUpBody = ({ handleSignUp, isLoading, isError, errorMessage }: SignUpBodyProps) => {
   const navigate = useNavigate();
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
@@ -30,10 +29,7 @@ export const SignUpBody = ({handleSignUp, isLoading, isError, errorMessage}: Sig
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
-    handleSignUp(
-      { userName, password, email }, 
-      { onSuccess: () => navigate('/login') }
-    );
+    handleSignUp({ userName, password, email }, { onSuccess: () => navigate('/login') });
   };
 
   return (
@@ -42,7 +38,7 @@ export const SignUpBody = ({handleSignUp, isLoading, isError, errorMessage}: Sig
         <StyledLockIcon>
           <LockOutlinedIcon sx={{ color: 'white' }} />
         </StyledLockIcon>
-        
+
         <Typography component="h1" variant="h5" gutterBottom>
           Sign Up
         </Typography>
@@ -53,11 +49,7 @@ export const SignUpBody = ({handleSignUp, isLoading, isError, errorMessage}: Sig
           </Alert>
         )}
 
-        <Box 
-          component="form" 
-          onSubmit={handleSubmit} 
-          sx={{ mt: 1, width: '100%' }}
-        >
+        <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1, width: '100%' }}>
           <TextField
             margin="normal"
             required
@@ -81,7 +73,7 @@ export const SignUpBody = ({handleSignUp, isLoading, isError, errorMessage}: Sig
             value={userName}
             onChange={(e) => setUserName(e.target.value)}
           />
-          
+
           <TextField
             margin="normal"
             required
@@ -94,12 +86,7 @@ export const SignUpBody = ({handleSignUp, isLoading, isError, errorMessage}: Sig
             onChange={(e) => setPassword(e.target.value)}
           />
 
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2, height: 48 }}
-          >
+          <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2, height: 48 }}>
             {!isLoading ? <>Sign Up</> : <CircularProgress size={24} />}
           </Button>
         </Box>
@@ -108,14 +95,13 @@ export const SignUpBody = ({handleSignUp, isLoading, isError, errorMessage}: Sig
   );
 };
 
-
 // Styled components
 const StyledPaper = styled(Paper)(({ theme }) => ({
   marginTop: theme.spacing(8),
   padding: theme.spacing(4),
   display: 'flex',
   flexDirection: 'column',
-  alignItems: 'center'
+  alignItems: 'center',
 }));
 
 const StyledLockIcon = styled(Box)(({ theme }) => ({
@@ -125,5 +111,5 @@ const StyledLockIcon = styled(Box)(({ theme }) => ({
   padding: theme.spacing(1),
   display: 'flex',
   alignItems: 'center',
-  justifyContent: 'center'
+  justifyContent: 'center',
 }));
