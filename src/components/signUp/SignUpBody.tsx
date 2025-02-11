@@ -7,7 +7,7 @@ import {
   Typography,
   Box,
   Alert,
-  CircularProgress
+  CircularProgress,
 } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { styled } from '@mui/material/styles';
@@ -18,11 +18,18 @@ interface SignUpBodyProps {
   isLoading?: boolean;
   isError?: boolean;
   errorMessage?: string;
-  handleSignUp: (req: SignUpRequest, callbacks?: { onSuccess: () => void }) => void;
+  handleSignUp: (
+    req: SignUpRequest,
+    callbacks?: { onSuccess: () => void }
+  ) => void;
 }
 
-
-export const SignUpBody = ({handleSignUp, isLoading, isError, errorMessage}: SignUpBodyProps) => {
+export const SignUpBody = ({
+  handleSignUp,
+  isLoading,
+  isError,
+  errorMessage,
+}: SignUpBodyProps) => {
   const navigate = useNavigate();
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
@@ -31,7 +38,7 @@ export const SignUpBody = ({handleSignUp, isLoading, isError, errorMessage}: Sig
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     handleSignUp(
-      { userName, password, email }, 
+      { userName, password, email },
       { onSuccess: () => navigate('/login') }
     );
   };
@@ -42,7 +49,7 @@ export const SignUpBody = ({handleSignUp, isLoading, isError, errorMessage}: Sig
         <StyledLockIcon>
           <LockOutlinedIcon sx={{ color: 'white' }} />
         </StyledLockIcon>
-        
+
         <Typography component="h1" variant="h5" gutterBottom>
           Sign Up
         </Typography>
@@ -53,9 +60,9 @@ export const SignUpBody = ({handleSignUp, isLoading, isError, errorMessage}: Sig
           </Alert>
         )}
 
-        <Box 
-          component="form" 
-          onSubmit={handleSubmit} 
+        <Box
+          component="form"
+          onSubmit={handleSubmit}
           sx={{ mt: 1, width: '100%' }}
         >
           <TextField
@@ -81,7 +88,7 @@ export const SignUpBody = ({handleSignUp, isLoading, isError, errorMessage}: Sig
             value={userName}
             onChange={(e) => setUserName(e.target.value)}
           />
-          
+
           <TextField
             margin="normal"
             required
@@ -108,14 +115,13 @@ export const SignUpBody = ({handleSignUp, isLoading, isError, errorMessage}: Sig
   );
 };
 
-
 // Styled components
 const StyledPaper = styled(Paper)(({ theme }) => ({
   marginTop: theme.spacing(8),
   padding: theme.spacing(4),
   display: 'flex',
   flexDirection: 'column',
-  alignItems: 'center'
+  alignItems: 'center',
 }));
 
 const StyledLockIcon = styled(Box)(({ theme }) => ({
@@ -125,5 +131,5 @@ const StyledLockIcon = styled(Box)(({ theme }) => ({
   padding: theme.spacing(1),
   display: 'flex',
   alignItems: 'center',
-  justifyContent: 'center'
+  justifyContent: 'center',
 }));

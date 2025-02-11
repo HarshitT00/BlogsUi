@@ -1,6 +1,12 @@
-import { BlogFormData, BlogRequest, Blogs, BlogsResponse, EditBlog } from "./BlogsApiModels";
+import {
+  BlogFormData,
+  BlogRequest,
+  Blogs,
+  BlogsResponse,
+  EditBlog,
+} from './BlogsApiModels';
 
-const BackendApi : string = 'https://blogsapi-8knn.onrender.com/api/post';
+const BackendApi = 'https://blogsapi-8knn.onrender.com/api/post';
 
 const getAuthToken = () => localStorage.getItem('token');
 
@@ -8,24 +14,25 @@ const createHeaders = () => {
   const token = getAuthToken();
   return {
     'Content-Type': 'application/json',
-    'Authorization': token ? `Bearer ${token}` : '',
+    Authorization: token ? `Bearer ${token}` : '',
   };
 };
 
-export const fetchBlogs = async (req : BlogRequest) : Promise<BlogsResponse> => {
+export const fetchBlogs = async (req: BlogRequest): Promise<BlogsResponse> => {
   try {
-    
     const queryParams = new URLSearchParams(req as any).toString();
     const response = await fetch(`${BackendApi}?${queryParams}`, {
       method: 'GET',
       headers: {
-        'Content-Type': 'application/json', 
+        'Content-Type': 'application/json',
       },
     });
 
     if (!response.ok) {
       const errorBody = await response.text();
-      throw new Error(`HTTP error! status: ${response.status}, message: ${errorBody}`);
+      throw new Error(
+        `HTTP error! status: ${response.status}, message: ${errorBody}`
+      );
     }
 
     return await response.json();
@@ -35,18 +42,25 @@ export const fetchBlogs = async (req : BlogRequest) : Promise<BlogsResponse> => 
   }
 };
 
-export const fetchMyBlogs = async (userName: string | null, req?: BlogRequest) : Promise<BlogsResponse> => {
+export const fetchMyBlogs = async (
+  userName: string | null,
+  req?: BlogRequest
+): Promise<BlogsResponse> => {
   try {
-    
     const queryParams = new URLSearchParams(req as any).toString();
-    const response = await fetch(`${BackendApi}/userName/${userName}?${queryParams}`, {
-      method: 'GET',
-      headers: createHeaders(),
-    });
+    const response = await fetch(
+      `${BackendApi}/userName/${userName}?${queryParams}`,
+      {
+        method: 'GET',
+        headers: createHeaders(),
+      }
+    );
 
     if (!response.ok) {
       const errorBody = await response.text();
-      throw new Error(`HTTP error! status: ${response.status}, message: ${errorBody}`);
+      throw new Error(
+        `HTTP error! status: ${response.status}, message: ${errorBody}`
+      );
     }
 
     return await response.json();
@@ -56,7 +70,7 @@ export const fetchMyBlogs = async (userName: string | null, req?: BlogRequest) :
   }
 };
 
-export const deleteBlog = async (blogId: number) : Promise<void> => {
+export const deleteBlog = async (blogId: number): Promise<void> => {
   try {
     await fetch(`${BackendApi}/${blogId}`, {
       method: 'DELETE',
@@ -65,11 +79,10 @@ export const deleteBlog = async (blogId: number) : Promise<void> => {
   } catch (error) {
     console.error('Failed to delete blog:', error);
     throw error;
-  }  
+  }
 };
 
-
-export const getBlog = async (blogId : number) : Promise<Blogs> => {
+export const getBlog = async (blogId: number): Promise<Blogs> => {
   try {
     const response = await fetch(`${BackendApi}/${blogId}`, {
       method: 'GET',
@@ -79,12 +92,16 @@ export const getBlog = async (blogId : number) : Promise<Blogs> => {
   } catch (error) {
     console.error('Failed to get blog:', error);
     throw error;
-  }  
+  }
 };
 
-export const updateBlog = async (blogId: number, userName: string, req : BlogFormData) : Promise<Blogs> => {
+export const updateBlog = async (
+  blogId: number,
+  userName: string,
+  req: BlogFormData
+): Promise<Blogs> => {
   try {
-    const updateBlogRequest: EditBlog = {...req, userName: userName};
+    const updateBlogRequest: EditBlog = { ...req, userName: userName };
     const response = await fetch(`${BackendApi}/${blogId}`, {
       method: 'PATCH',
       headers: createHeaders(),
@@ -94,12 +111,15 @@ export const updateBlog = async (blogId: number, userName: string, req : BlogFor
   } catch (error) {
     console.error('Failed to get blog:', error);
     throw error;
-  }  
+  }
 };
 
-export const addBlog = async (userName: string, req : BlogFormData) : Promise<Blogs> => {
+export const addBlog = async (
+  userName: string,
+  req: BlogFormData
+): Promise<Blogs> => {
   try {
-    const updateBlogRequest: EditBlog = {...req, userName: userName};
+    const updateBlogRequest: EditBlog = { ...req, userName: userName };
     const response = await fetch(`${BackendApi}/addPost`, {
       method: 'POST',
       headers: createHeaders(),
@@ -109,6 +129,5 @@ export const addBlog = async (userName: string, req : BlogFormData) : Promise<Bl
   } catch (error) {
     console.error('Failed to get blog:', error);
     throw error;
-  }  
+  }
 };
-
