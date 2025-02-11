@@ -9,6 +9,7 @@ import {
   } from '@mui/icons-material';
 import InfiniteScroll from "react-infinite-scroll-component";
 import { InfiniteData } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
 
 interface HomeBodyProps { 
     blogsResponse?: InfiniteData<BlogsResponse>;
@@ -36,6 +37,8 @@ const formatDate = (dateString: string) => {
 export const HomeBody = ({blogsResponse, isLoading, isError, fetchNextPage, hasNextPage} : HomeBodyProps) => {
 
     const blogs = blogsResponse?.pages.flatMap(page => page.data) ?? [];
+    const navigate = useNavigate();
+    const userName = localStorage.getItem('userName');
 
     if (isLoading) {
         return (
@@ -141,6 +144,7 @@ export const HomeBody = ({blogsResponse, isLoading, isError, fetchNextPage, hasN
                                             color="primary" 
                                             variant="contained"
                                             startIcon={<ArticleIcon />}
+                                            onClick={() => {userName ? navigate(`/${blog.id}`) : navigate(`/login`)}}
                                         >
                                             Read More
                                         </Button>
